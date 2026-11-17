@@ -20,6 +20,8 @@ struct markdown_cli: ParsableCommand {
         while let line = readLine(strippingNewline: true) {
             lines.append(line)
         }
+        let text = lines.joined(separator: "\n")
+        let result = applyFormat(using: text)
         
         let homePath = getHome()
         let markdownPath = homePath?.appending(path: "markdown")
@@ -35,29 +37,13 @@ struct markdown_cli: ParsableCommand {
             }
         }
         
-        /*let markdownFile = markdownPath?.appending(path: "file.md")
+        let markdownFile = markdownPath?.appending(path: "file.md")
         do {
-            try lines.joined(separator: "\n").write(
+            try result.write(
                 to: markdownFile!,
                 atomically: true,
                 encoding: .utf8
             )
-        } */
-    }
-    
-    
-    private func getHome() -> URL? {
-        let home = FileManager.default.homeDirectoryForCurrentUser
-        #if os(macOS)
-        if #available(macOS 13.0, *) {
-            return home.appending(path: "Documents")
-        } else {
-            return home.appendingPathComponent("Documents")
         }
-        #elseif os(Linux)
-        return home.appendingPathComponent("Documents")
-        #else
-        fatalError("Platform no found")
-        #endif
     }
 }
