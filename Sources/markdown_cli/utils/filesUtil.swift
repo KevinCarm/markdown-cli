@@ -15,18 +15,19 @@ func existsDirectory(using url: URL) -> Bool {
     )
     return exists && isDirectory.boolValue
 }
-
 func getHome() -> URL? {
     let home = FileManager.default.homeDirectoryForCurrentUser
     #if os(macOS)
-    if #available(macOS 13.0, *) {
-        return home.appending(path: "Documents")
-    } else {
-        return home.appendingPathComponent("Documents")
-    }
+        if #available(macOS 13.0, *) {
+            return home.appending(path: "Documents")
+        } else {
+            return home.appendingPathComponent("Documents")
+        }
     #elseif os(Linux)
-    return home.appendingPathComponent("Documents")
+        return home.appendingPathComponent("Documents")
+    #elseif os(Windows)
+        return home.appending(path: "Documents")
     #else
-    fatalError("Platform no found")
+        fatalError("Platform no found")
     #endif
 }

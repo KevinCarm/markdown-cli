@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:markdown-cli}",
+            "name": "Debug markdown",
+            "target": "markdown",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug markdown"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:markdown-cli}",
+            "name": "Release markdown",
+            "target": "markdown",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release markdown"
+        }
+    ]
+}
