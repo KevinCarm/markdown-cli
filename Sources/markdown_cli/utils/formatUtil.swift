@@ -57,3 +57,13 @@ func applyFormat(using text: String) -> String {
 
     return result
 }
+
+
+func getDateFormat() -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd HHmmss"
+    formatter.locale = Locale(identifier: "es_MX")
+    formatter.timeZone = TimeZone.current
+
+    return formatter.string(from: Date())
+}

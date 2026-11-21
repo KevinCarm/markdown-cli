@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Markdown
 
 func existsDirectory(using url: URL) -> Bool {
     var isDirectory: ObjCBool = false
@@ -30,4 +31,66 @@ func getHome() -> URL? {
     #else
         fatalError("Platform no found")
     #endif
+}
+func printFilesThreeFormat() {
+    let homePath = getHome()
+    let markdownPath = homePath?.appending(path: "markdown")
+    let exists = existsDirectory(using: (markdownPath!))
+    if !exists {
+        print("The directory does not exists")
+        return
+    }
+    //Get all files from directory
+    do {
+        let green = "\u{001B}[32m"
+        let reset = "\u{001B}[0m"
+        let fileManager = FileManager()
+        let files = try fileManager.contentsOfDirectory(
+            at: markdownPath!,
+            includingPropertiesForKeys: nil
+        )
+        for file in files {
+            print("\(green)[-------------------- \(file.lastPathComponent) --------------------]\(reset)")
+            let filePath = markdownPath?.appending(path: file.lastPathComponent)
+            let contentOfFile = try String(
+                contentsOf: filePath!, 
+                encoding: .utf8
+            )
+            let document = Document(parsing: contentOfFile)
+            print(document.debugDescription())
+        }
+    } catch {
+        
+    }
+}
+
+func printFilesTextFormat() {
+    let homePath = getHome()
+    let markdownPath = homePath?.appending(path: "markdown")
+    let exists = existsDirectory(using: (markdownPath!))
+    if !exists {
+        print("The directory does not exists")
+        return
+    }
+    //Get all files from directory
+    do {
+        let green = "\u{001B}[32m"
+        let reset = "\u{001B}[0m"
+        let fileManager = FileManager()
+        let files = try fileManager.contentsOfDirectory(
+            at: markdownPath!,
+            includingPropertiesForKeys: nil
+        )
+        for file in files {
+            print("\(green)[-------------------- \(file.lastPathComponent) --------------------]\(reset)")
+            let filePath = markdownPath?.appending(path: file.lastPathComponent)
+            let contentOfFile = try String(
+                contentsOf: filePath!, 
+                encoding: .utf8
+            )
+            print(contentOfFile)
+        }
+    } catch {
+        
+    }
 }
